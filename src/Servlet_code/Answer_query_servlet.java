@@ -1,3 +1,4 @@
+package Servlet_code;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -57,14 +58,20 @@ public class Answer_query_servlet extends HttpServlet {
 			}
 		*/
 		
+		
 		// Dynamically create HTML response to send back to browser
+		/*
 		response.setContentType("text/html");
 		response.setBufferSize(8192);
 		PrintWriter out = response.getWriter();
 		out.println( "<html>" + "<head><title>" + "QueryResults" +"</title></head>");
 		
 		out.println( "<html>" + "<body>" + "Hi you query is running on Quantum computer.<br> Please be patient." +"</body>");
+		*/
 		
+		request.setAttribute("sql_results", "Hi from Servlet"); 
+        request.getRequestDispatcher("/QueryResults.jsp").forward(request, response);    
+        
 		
 	}
 
