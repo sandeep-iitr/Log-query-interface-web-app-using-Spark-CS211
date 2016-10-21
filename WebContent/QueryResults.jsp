@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@ page import="Servlet_code.Answer_query_servlet" language="java" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -102,8 +103,10 @@
 			</tr>
 		   </table>	
 <%
-  String message = (String) request.getAttribute("sql_results");
-  out.println("Servlet communicated message to JSP: "+ message);
+ArrayList <String> al = new ArrayList<String>();
+  al =(ArrayList <String>) request.getAttribute("sql_results");
+  for(int i=0;i<al.size();i++)
+  out.println("Servlet communicated message to JSP: "+ al.get(i)+"<br>");
 %>	    
 		</div>
 		

@@ -1,12 +1,15 @@
 package Servlet_code;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import Java_code.Database_interactor;
 
 /**
  * Servlet implementation class Answer_query_servlet
@@ -69,7 +72,15 @@ public class Answer_query_servlet extends HttpServlet {
 		out.println( "<html>" + "<body>" + "Hi you query is running on Quantum computer.<br> Please be patient." +"</body>");
 		*/
 		
-		request.setAttribute("sql_results", "Hi from Servlet"); 
+		Database_interactor db = new Database_interactor();
+		db.Create_connection();
+		
+		ArrayList <String>sql_results=db.Query_results();
+		
+		if(sql_results.size()==0)//query not successful
+			sql_results.add("Database query not successful");
+		
+		request.setAttribute("sql_results",sql_results); 
         request.getRequestDispatcher("/QueryResults.jsp").forward(request, response);    
         
 		
