@@ -72,10 +72,13 @@ public class Answer_query_servlet extends HttpServlet {
 		out.println( "<html>" + "<body>" + "Hi you query is running on Quantum computer.<br> Please be patient." +"</body>");
 		*/
 		
+		String sql_string = request.getParameter("sql_string");
+		
+		
 		Database_interactor db = new Database_interactor();
 		db.Create_connection();
 		
-		ArrayList <String>sql_results=db.Query_results();
+		ArrayList <String>sql_results=db.Query_results(sql_string);
 		
 		if(sql_results.size()==0)//query not successful
 			sql_results.add("Database query not successful");

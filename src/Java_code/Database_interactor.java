@@ -53,7 +53,7 @@ public class Database_interactor {
     }//end of create connection
 	
     
-    public ArrayList<String> Query_results()
+    public ArrayList<String> Query_results(String sql_string)
     {
     	// Execute SQL query
         Statement stmt;
@@ -65,7 +65,12 @@ public class Database_interactor {
 			{
 			stmt = conn.createStatement();
 			 String sql;
-		        sql = "SELECT * FROM tMsg";
+			 
+			 sql = "SELECT * FROM tMsg LIMIT 10";
+			 
+			 if(sql_string.length()>0)
+				 sql = sql_string;
+		       
 		        ResultSet rs = stmt.executeQuery(sql);
 
 		        // Extract data from result set

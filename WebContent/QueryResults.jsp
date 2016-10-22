@@ -70,7 +70,7 @@
 			</select>
 			<br>
 			<label>Customize query message</label>
-			<textarea class="form-control" rows="6"></textarea> 
+			<textarea class="form-control" name="sql_string" rows="6"></textarea> 
 			 <br>
 			 <br>
 			 <button type="submit" name="button" value="button1" class="btn btn-primary">Submit Query</button>
