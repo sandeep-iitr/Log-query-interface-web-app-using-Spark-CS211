@@ -83,7 +83,19 @@
 		    <h4 class="panel-title">Query Result</h4>
 		  </div>
 		  <div class="panel-body">
-		    <p>Result for query message "SELECT...FROM...WHERE..."</p>
+		    <p>
+		    
+		    <%
+           String sql_string_serv = (String)request.getAttribute("sql_string_serv");
+		   if(sql_string_serv!=null) 
+           out.println(sql_string_serv);
+		   else
+			   out.println("Result for query message \"SELECT...FROM...WHERE...");
+           //Result for query message "SELECT...FROM...WHERE..."
+           %>	
+		   
+		    
+		    </p>
 		  </div>
 		  <br>
 		  <table class="table table-striped table-hover" style="width:100%;">

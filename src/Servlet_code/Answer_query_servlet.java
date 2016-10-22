@@ -84,6 +84,10 @@ public class Answer_query_servlet extends HttpServlet {
 			sql_results.add("Database query not successful");
 		
 		request.setAttribute("sql_results",sql_results); 
+		
+		if(sql_string.length()>0)
+			request.setAttribute("sql_string_serv",sql_string);
+		
         request.getRequestDispatcher("/QueryResults.jsp").forward(request, response);    
         
 		
