@@ -76,7 +76,7 @@ public class Database_interactor {
 		        // Extract data from result set
 		        while(rs.next()){
 		           //Retrieve by column name
-		          
+		           System.out.println(rs);
 		           String first = rs.getString("Filepath");
 		           Results.add(first);
                   

@@ -64,17 +64,31 @@
 		<br>
 		<form method="post" action="Answer_query_servlet" class="form-group"> 
 			<label>Select template query</label>
-			<select class="form-control">
+			<select class="form-control" id="sampleQuery" onchange="updateQuery('sampleQuery')">
+				<option value="">---Select Sample Query---</option>
+				<option value="SELECT * FROM tFile;">SELECT * FROM tFile;</option>
+				<option value="SELECT * FROM tMsg;">SELECT * FROM tFile;</option>
+				<option value="SELECT Filepath,Phone,Carrier,Timestamp FROM tFile;">SELECT Filepath, Phone, Carrier, Timestamp FROM tFile;</option>
+				<option value="SELECT Filepath,Timestamp,MsgType,MsgHash,MsgPath,LineNo FROM tMsg;">SELECT Filepath,Timestamp,MsgType,MsgHash,MsgPath,LineNo FROM tMsg;</option>
+				<option value="SELECT * FROM tFile LIMIT 10;">SELECT * FROM tFile LIMIT 10;</option>
+				<option value="SELECT Phone,Carrier FROM tFile LIMIT 10;">SELECT Phone,Carrier FROM tFile LIMIT 10;</option>
 			</select>
 			<br>
 			<label>Customize query message</label>
-			<textarea class="form-control" name="sql_string" rows="6"></textarea> 
+			<textarea class="form-control" name="sql_string" rows="6" id="queryMsg"></textarea> 
 			 <br>
 			 <br>
 			 <button type="submit" name="button" value="button1" class="btn btn-primary">Submit Query</button>
 			 <hr>
 			 <br>
 		</form>
+		
+		<script type="text/javascript">
+			function updateQuery(id){
+				document.getElementById("queryMsg").value = document.getElementById(id).value;
+			}
+		
+		</script>
 		
 		<div class="panel panel-default" style="width:70%; margin-left: auto; margin-right:auto; margin-bottom:200px">
 		  <div class="panel-heading">
