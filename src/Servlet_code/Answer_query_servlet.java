@@ -1,7 +1,17 @@
 package Servlet_code;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -72,6 +82,8 @@ public class Answer_query_servlet extends HttpServlet {
 		out.println( "<html>" + "<body>" + "Hi you query is running on Quantum computer.<br> Please be patient." +"</body>");
 		*/
 		
+		// old implement without spark //
+		/*
 		String sql_string = request.getParameter("sql_string");
 		
 		
@@ -89,8 +101,92 @@ public class Answer_query_servlet extends HttpServlet {
 			request.setAttribute("sql_string_serv",sql_string);
 		
         request.getRequestDispatcher("/QueryResults.jsp").forward(request, response);    
-        
+        */
+		
+		// new implement with spark server involved
+//		 System.out.println(this.getClass().getResource("/"));
+		 
+//		Properties properties = new Properties();
+//		try {
+//			properties.load(new FileInputStream("/home/spark/Eclipse_Workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/Log_Query_Interface/WEB-INF/classes/s.properties"));
+//			properties.load(new FileInputStream(this.getClass().getResource("/")+"s.properties"));
+//		} catch (IOException e1) {e1.printStackTrace();}
+				
+	
+		String sql_string = request.getParameter("sql_string");
+		if(sql_string.length()==0)
+			sql_string = "SELECT * FROM tMsg LIMIT 5";		
+		
+		request.setAttribute("sql_string_serv",sql_string);
+//			request.setAttribute("sql_string_serv",HTTP_GET(properties.getProperty("Spark_URL"),sql_string));
+		request.setAttribute("sql_results",HTTP_POST("http://localhost:4567/",sql_string)); 
+		
+		request.getRequestDispatcher("/QueryResults.jsp").forward(request, response);    
+
 		
 	}
 
+	
+	/*
+	 * Sending HTTP request(body) using GET method to Spark server and return the body of response. 
+	 */
+	private String HTTP_POST(String url, String request) {
+		String result="";
+
+		URL httpUrl = null;
+		try {
+			httpUrl = new URL(url);
+		} catch (MalformedURLException e) {e.printStackTrace();}
+        //build the connection
+        URLConnection connection = null;
+		try {
+			connection = httpUrl.openConnection();
+		} catch (IOException e) {e.printStackTrace();}
+        connection.setRequestProperty("accept", "*/*");
+        connection.setRequestProperty("connection", "Keep-Alive");
+        connection.setRequestProperty("user-agent", "CS-211@UCLA");
+        connection.setRequestProperty("content-type", "application/SQL-lines");  
+        connection.setRequestProperty("Content-Lenth",String.valueOf(request.length()));
+        connection.setDoOutput(true);
+        connection.setDoInput(true);
+    	OutputStreamWriter outputStream = null;
+		try {
+			outputStream = new OutputStreamWriter(connection.getOutputStream());
+		} catch (IOException e1) {e1.printStackTrace();}
+		try {
+			outputStream.write(request);
+			outputStream.flush();
+			outputStream.close();
+		} catch (IOException e1) {e1.printStackTrace();}
+
+
+//        System.out.println("Before Connected.");
+//        try {
+//			connection.connect();
+//		} catch (IOException e) {e.printStackTrace();}        
+////        System.out.println("After Connected.");
+
+        // handle the response.
+
+        BufferedReader bufferedReader = null;
+		try {
+			bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		} catch (IOException e) {e.printStackTrace();}
+        String line;
+        try {
+			while ((line = bufferedReader.readLine()) != null) result += line;
+		} catch (IOException e) {e.printStackTrace();}
+        try {
+			bufferedReader.close();
+		} catch (IOException e) {e.printStackTrace();}
+//        System.out.println("There should be an result.");
+        System.out.println(result);
+		return result;
+		
+	}
+	
+	
+	
+	
+	
 }

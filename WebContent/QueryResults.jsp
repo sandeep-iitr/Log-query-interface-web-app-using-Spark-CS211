@@ -115,10 +115,17 @@
 			</tr>
 		   </table>	
 <%
-ArrayList <String> al = new ArrayList<String>();
-  al =(ArrayList <String>) request.getAttribute("sql_results");
-  for(int i=0;i<al.size();i++)
-  out.println("Servlet communicated message to JSP: "+ al.get(i)+"<br>");
+  // sql_results as an ArrayList <String>
+//  ArrayList <String> al = new ArrayList<String>();
+//  al =(ArrayList <String>) request.getAttribute("sql_results");
+//  for(int i=0;i<al.size();i++)
+//  out.println("Servlet communicated message to JSP: "+ al.get(i)+"<br>");
+  
+  
+  // new implement with spark server involved
+    
+	out.println(request.getAttribute("sql_results"));
+  
 %>	    
 		</div>
 		
