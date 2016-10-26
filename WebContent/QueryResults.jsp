@@ -1,4 +1,4 @@
-<%@page import="java.util.ArrayList"%>
+<%-- <%@page import="java.util.ArrayList"%>
 <%@ page import="Servlet_code.Answer_query_servlet" language="java" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -78,7 +78,7 @@
 			 <br>
 		</form>
 		
-		<div class="panel panel-default" style="width:70%; margin-left: auto; margin-right:auto; margin-bottom:200px">
+		<div class="panel panel-default" style="width:70%; margin-left: auto; margin-right:auto; margin-bottom:200px;">
 		  <div class="panel-heading">
 		    <h4 class="panel-title">Query Result</h4>
 		  </div>
@@ -98,7 +98,7 @@
 		    </p>
 		  </div>
 		  <br>
-		  <table class="table table-striped table-hover" style="width:100%;">
+		  <table class="table table-striped table-hover" style="width:inherit;">
 			<tr>
 				<thead class="thead-default">
 					<th>File Path</th>
@@ -113,13 +113,14 @@
 				<td>ATT-MicroCell</td>
 				<td>2015-11-10 16:10:02</td>
 			</tr>
+			<%
+				ArrayList<ArrayList<String>> al = new ArrayList<ArrayList<String>>();
+				al = (ArrayList<ArrayList<String>>) request.getAttribute("sql_results");
+				for(int i=0;i<al.size();i++)
+					out.println("<tr><td>Servlet communicated message to JSP: "+ al.get(i).get(0)+"<td><tr>");
+			%>
 		   </table>	
-<%
-ArrayList <String> al = new ArrayList<String>();
-  al =(ArrayList <String>) request.getAttribute("sql_results");
-  for(int i=0;i<al.size();i++)
-  out.println("Servlet communicated message to JSP: "+ al.get(i)+"<br>");
-%>	    
+	    
 		</div>
 		
 		
@@ -127,4 +128,4 @@ ArrayList <String> al = new ArrayList<String>();
 	        <p>Contributed by Ariel, Sandeep, Jacky, Xin @UCLA CS211</p>
 	    </div>
 	</body>
-</html>
+</html> --%>

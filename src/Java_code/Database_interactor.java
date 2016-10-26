@@ -53,44 +53,53 @@ public class Database_interactor {
     }//end of create connection
 	
     
-    public ArrayList<String> Query_results(String sql_string)
+    public ArrayList<ArrayList<String>> Query_results(String sql_string)
     {
     	// Execute SQL query
         Statement stmt;
 
-        ArrayList<String> Results = new ArrayList();
+        ArrayList<ArrayList<String>> Results = new ArrayList();
         
 		try {
-			if(conn!=null)
-			{
-			stmt = conn.createStatement();
-			 String sql;
+			if(conn!=null){
+				stmt = conn.createStatement();
+				String sql;
 			 
-			 sql = "SELECT * FROM tMsg LIMIT 10";
-			 
-			 if(sql_string.length()>0)
-				 sql = sql_string;
-		       
-		        ResultSet rs = stmt.executeQuery(sql);
-
-		        // Extract data from result set
-		        while(rs.next()){
-		           //Retrieve by column name
-		           System.out.println(rs);
-		           String first = rs.getString("Filepath");
-		           Results.add(first);
-                  
-		           
-		        }
-			}//end if
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+				 sql = "SELECT * FROM tMsg LIMIT 10";
+				 
+				 if(sql_string.length()>0)
+					sql = sql_string;
+			       
+			        ResultSet rs = stmt.executeQuery(sql);
+			        ResultSetMetaData rsmd = rs.getMetaData();
+			        
+			        int colNums = rsmd.getColumnCount();
+			        ArrayList<String> fieldNames = new ArrayList<String>();
+			        for(int i=1; i<=colNums; i++){
+			        	fieldNames.add(rsmd.getColumnName(i));
+			        }
+			        System.out.println(fieldNames);
+			        Results.add(fieldNames);
+			        
+			        // Extract data from result set
+			        while(rs.next()){
+			           //Retrieve by column name
+			        	ArrayList<String> txn = new ArrayList<String>();
+			        	for(int i=1; i<=colNums; i++){
+			        		String colName = rsmd.getColumnName(i);
+			        		String colData = rs.getString(colName);
+			        		txn.add(colData);
+			        	}
+			        	Results.add(txn);
+			        }
+			        System.out.println(Results);
+				}//end if
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
        
-    	
-		return Results;
-    	
+			return Results;
     }
     
 }//end of class

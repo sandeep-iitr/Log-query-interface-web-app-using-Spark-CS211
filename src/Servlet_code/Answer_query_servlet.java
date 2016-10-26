@@ -78,17 +78,18 @@ public class Answer_query_servlet extends HttpServlet {
 		Database_interactor db = new Database_interactor();
 		db.Create_connection();
 		
-		ArrayList <String>sql_results=db.Query_results(sql_string);
+		ArrayList<ArrayList<String>> sql_results = db.Query_results(sql_string);
 		
-		if(sql_results.size()==0)//query not successful
-			sql_results.add("Database query not successful");
+		if(sql_results.size() == 0){//query not successful
+			String errMsg = "Database query not successful";
+		}
 		
 		request.setAttribute("sql_results",sql_results); 
 		
 		if(sql_string.length()>0)
 			request.setAttribute("sql_string_serv",sql_string);
 		
-        request.getRequestDispatcher("/QueryResults.jsp").forward(request, response);    
+        request.getRequestDispatcher("/index.jsp").forward(request, response);    
         
 		
 	}

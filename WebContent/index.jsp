@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page import="Servlet_code.Answer_query_servlet" language="java" %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -67,7 +70,7 @@
 			<select class="form-control" id="sampleQuery" onchange="updateQuery('sampleQuery')">
 				<option value="">---Select Sample Query---</option>
 				<option value="SELECT * FROM tFile;">SELECT * FROM tFile;</option>
-				<option value="SELECT * FROM tMsg;">SELECT * FROM tFile;</option>
+				<option value="SELECT * FROM tMsg;">SELECT * FROM tMsg;</option>
 				<option value="SELECT Filepath,Phone,Carrier,Timestamp FROM tFile;">SELECT Filepath, Phone, Carrier, Timestamp FROM tFile;</option>
 				<option value="SELECT Filepath,Timestamp,MsgType,MsgHash,MsgPath,LineNo FROM tMsg;">SELECT Filepath,Timestamp,MsgType,MsgHash,MsgPath,LineNo FROM tMsg;</option>
 				<option value="SELECT * FROM tFile LIMIT 10;">SELECT * FROM tFile LIMIT 10;</option>
@@ -90,44 +93,35 @@
 		
 		</script>
 		
-		<div class="panel panel-default" style="width:70%; margin-left: auto; margin-right:auto; margin-bottom:200px">
-		  <div class="panel-heading">
-		    <h4 class="panel-title">Query Result</h4>
-		  </div>
-		  <div class="panel-body">
-		    <p>Result for query message "SELECT...FROM...WHERE..."</p>
-		  </div>
-		  <br>
-		  <table class="table table-striped table-hover" style="width:100%;">
-			<tr>
-				<thead class="thead-default">
-					<th>File Path</th>
-					<th>Phone</th>
-					<th>Carrier</th>
-					<th>Timestamp</th>
-				</thead>
-			</tr>
-			<tr>
-				<td>/mnt/milog/by_operator_model/ATT-MicroCell_Samsung-SM-G900T/diag_log_20151110_161002_351881062060429_samsung-SM-G900T_ATT-MicroCell.mi2log</td>
-				<td>samsung-SM-G900T</td>
-				<td>ATT-MicroCell</td>
-				<td>2015-11-10 16:10:02</td>
-			</tr>
-			<tr>
-				<td>/mnt/milog/by_operator_model/ATT-MicroCell_Samsung-SM-G900T/diag_log_20151110_161002_351881062060429_samsung-SM-G900T_ATT-MicroCell.mi2log</td>
-				<td>samsung-SM-G900T</td>
-				<td>ATT-MicroCell</td>
-				<td>2015-11-10 16:10:02</td>
-			</tr>
-			<tr>
-				<td>/mnt/milog/by_operator_model/ATT-MicroCell_Samsung-SM-G900T/diag_log_20151110_161002_351881062060429_samsung-SM-G900T_ATT-MicroCell.mi2log</td>
-				<td>samsung-SM-G900T</td>
-				<td>ATT-MicroCell</td>
-				<td>2015-11-10 16:10:02</td>
-			</tr>
-		   </table>		    
-		</div>
 		
+		<%
+			ArrayList<ArrayList<String>> queryRst = (ArrayList<ArrayList<String>>) request.getAttribute("sql_results");
+			if(queryRst==null)
+				out.println("<br>");
+			else{
+				String sql_string_serv = (String)request.getAttribute("sql_string_serv");
+				
+				out.println("<div class=\"panel panel-default\" style=\"width:70%; margin-left: auto; margin-right:auto; margin-bottom:200px\">\n" + 
+								"<div class=\"panel-heading\"><h4 class=\"panel-title\">Query Result</h4></div>" + 
+								"<div class=\"panel-body\"><p>Result for query message\"" + sql_string_serv +"\"</p></div>\n" + "<br>" +
+								"<table class=\"table table-striped table-hover\" width=\"50%\">\n" +
+									"<tr><thead class=\"thead-default\">\n");
+				ArrayList<String> fieldNames = queryRst.get(0);
+				for(int i=0; i<fieldNames.size(); i++)
+					out.println("<th>"+ fieldNames.get(i)+"</th>"); 
+				out.println("</thead></tr>\n"); /* end of table head */
+			
+				/*table content*/
+				for(int i=1; i<queryRst.size(); i++){
+					out.println("<tr>");
+					for(int j=0; j<queryRst.get(i).size(); j++){
+						out.println("<td>" + queryRst.get(i).get(j) +"</td>");
+					}
+					out.println("</tr>");
+				}
+				out.println("</table></div>");
+			}
+		%>
 		
 		<div id="footer">
 	        <p>Contributed by Ariel, Sandeep, Jacky, Xin @UCLA CS211</p>
