@@ -8,3 +8,6 @@ This is course project of CS 211: Log Query interface
 4) To run the project on mysql you need to set up the Mysql database.<br>
 5) Mysql database, in the project I have used username and password "root". If you have any other password, update it in the Database_connector class.<br>
 
+#About Spark:
+1) If you want to connect to spark, change the "Run_Spark" into true (a private static final variable in Answer_query_servlet). <br>
+2) Default spark server IP: localhost:4567. <br> 
