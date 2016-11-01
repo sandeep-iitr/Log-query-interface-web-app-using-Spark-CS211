@@ -63,6 +63,7 @@
 		<br>
 		<br>
 		<br>
+		<br>
 		<h3>Log Query</h3>
 		<br>
 		<form method="post" action="Answer_query_servlet" class="form-group"> 
@@ -74,6 +75,7 @@
 				<option value="SELECT Filepath,Phone,Carrier,Timestamp FROM tFile;">SELECT Filepath, Phone, Carrier, Timestamp FROM tFile;</option>
 				<option value="SELECT Filepath,Timestamp,MsgType,MsgHash,MsgPath,LineNo FROM tMsg;">SELECT Filepath,Timestamp,MsgType,MsgHash,MsgPath,LineNo FROM tMsg;</option>
 				<option value="SELECT * FROM tFile LIMIT 10;">SELECT * FROM tFile LIMIT 10;</option>
+				<option value="SELECT * FROM tMsg LIMIT 10;">SELECT * FROM tMsg LIMIT 10;</option>
 				<option value="SELECT Phone,Carrier FROM tFile LIMIT 10;">SELECT Phone,Carrier FROM tFile LIMIT 10;</option>
 			</select>
 			<br>
@@ -101,27 +103,28 @@
 			else{
 				String sql_string_serv = (String)request.getAttribute("sql_string_serv");
 				
-				out.println("<div class=\"panel panel-default\" style=\"width:70%; margin-left: auto; margin-right:auto; margin-bottom:200px\">\n" + 
+				out.println("<div class=\"panel panel-default\" style=\"width:80%; margin-left: auto; margin-right:auto; margin-bottom:200px\">\n" + 
 								"<div class=\"panel-heading\"><h4 class=\"panel-title\">Query Result</h4></div>" + 
 								"<div class=\"panel-body\"><p>Result for query message\"" + sql_string_serv +"\"</p></div>\n" + "<br>" +
-								"<table class=\"table table-striped table-hover\" width=\"50%\">\n" +
-									"<tr><thead class=\"thead-default\">\n");
-				ArrayList<String> fieldNames = queryRst.get(0);
-				for(int i=0; i<fieldNames.size(); i++)
-					out.println("<th>"+ fieldNames.get(i)+"</th>"); 
-				out.println("</thead></tr>\n"); /* end of table head */
-			
-				/*table content*/
-				for(int i=1; i<queryRst.size(); i++){
-					out.println("<tr>");
-					for(int j=0; j<queryRst.get(i).size(); j++){
-						out.println("<td>" + queryRst.get(i).get(j) +"</td>");
-					}
-					out.println("</tr>");
-				}
-				out.println("</table></div>");
-			}
-		%>
+								"<table class=\"table table-striped table-hover\" style=\"table-layout:fixed; width:100%\">\n" +
+									"<thead class=\"thead-default\">\n"
+										+ "<tr>\n");
+							ArrayList<String> fieldNames = queryRst.get(0);
+							for(int i=0; i<fieldNames.size(); i++)
+								out.println("<th class=\"\">"+ fieldNames.get(i)+"</th>"); 
+							out.println("</tr></thead>\n"); /* end of table head */
+							out.println("<tbody>\n");
+							/*table content*/
+							for(int i=1; i<queryRst.size(); i++){
+								out.println("<tr>");
+								for(int j=0; j<queryRst.get(i).size(); j++){
+									out.println("<td style=\"word-wrap:break-word;\">" + queryRst.get(i).get(j) +"</td>");
+								}
+								out.println("</tr>");
+							}
+							out.println("</tbody></table></div>");
+						}
+					%>
 		
 		<div id="footer">
 	        <p>Contributed by Ariel, Sandeep, Jacky, Xin @UCLA CS211</p>
