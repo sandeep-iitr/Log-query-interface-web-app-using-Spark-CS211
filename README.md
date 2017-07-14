@@ -12,6 +12,10 @@ Log Query Interface is an interactive web application that allows users to query
 
 ## [Project Presentation](https://github.com/sandeep-iitr/Log-query-interface-web-app-using-Spark-CS211)
 
+## Architecture
+
+![System Design](https://github.com/sandeep-iitr/Log-query-interface-web-app-using-Spark-CS211/blob/master/Arch.png)
+
 ## Setting up system:
 1) Download eclipse java EE version. <br>
 2) Download Apache tomcat 1.7 (it will work with other version, it is preffered to use this. Other version may give conflict)<br>
