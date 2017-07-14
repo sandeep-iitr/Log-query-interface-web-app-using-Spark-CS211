@@ -39,3 +39,20 @@ Spark server is our project’s core part. It improves our project’s performan
 ### Implementation
 We implemented our log query system based on three modes: MySql, Spark on one machine and Spark on a cluster. And we tested their performance separately by running some queries on tFile and tMsg dataset. The tests show that the system running with Spark cluster can make the data querying more than 1000 times faster than running with MySQL and Spark on one machine.
 
+### Related work
+We apply Spark Apache, which is a fast and general engine for large-scale data processing, to store and process our huge amount of log data. Actually Spark is used at a wide range of organizations to process large datasets.
+The teams from Bing, Microsoft need to monitor and analyze user engagement, act upon revenue opportunities in markets around the world. So they use Apache Spark Streaming to collect logs and signals associated every single search query, process and enrich the data in near real-time.
+AirStream is a realtime stream computation framework built on top of Spark Streaming and Spark SQL. It allows engineers and data scientists at Airbnb to easily leverage Spark Streaming and SQL to get real-time insights and to build real-time feedback loops. There have been a few production use cases such as real-time ingestion pipelines for data warehouse, and computing derived data for online data products. 
+Baidu’s deep learning technology uses Spark to drive deep learning training and prediction using Paddle, the deep learning library developed by Baidu IDL. This enables multiple Baidu’s production offline processing to do data ingestion, preprocessing, feature extraction and model training in one Spark cluster. they also address the resource heterogeneity to support multi-tenancy using Spark.
+Spark Streaming solves the real-time data processing problem, but to build large scale data pipeline we need to combine it with another tool that addresses data integration challenges. Thus the Apache Kafka project[20] introduced a new tool, Kafka Connect, to make data import/export to and from Kafka easier and bridge the gap between other data systems and stream processing framework.
+The teams from Trifacta built a new engine that casts data profiling as an OLAP problem and leverages Spark to quickly generate query results. Its low latency enables ‘pay-as-you-go’ profiling, empowering users to explore their data iteratively, summarizing columns only as needed and executing focused drill-down queries too expensive to apply broadly. We can see 10x-100x speedups with Spark and faster still in pay-as-you go cases.
+Spark Apache is also widely applied in research areas to help solve problems. 
+VAST Research lab from UCLA presented Blaze, an accelerator-aware runtime system that enables rapid warehouse-scale accelerator deployment for the Hadoop/Spark ecosystem. Blaze provides accelerator management for data-intensive scalable computing (DISC) systems in a cluster with heterogeneous accelerator platforms, including GPUs and FPGAs.
+The Scientific Computing team at the University of Washington’s Institute for Health Metrics and Evaluation is extending the landmark Global Burden of Disease study to forecast what the future of the world’s health might look like under a variety of scenarios. In order to do so, they created massively detailed simulations of the world, using Spark to distribute a workload that can produce up to a petabyte of outputs per run.
+
+
+
+### Conclusion
+We presented the design, development and testing of Log Query Interface which is web based system to query very large datasets. Log Query Interface allows users to query the large dataset easily and efficiently. From our final results we saw that the query time can be improved by factor of 100 time using simple machine to form a cluster than using one machine. The main factor driving the development was to process the queries in realtime. We also compared and tested the system using in-memory processing and without using in-memory processing. In our testbed, the in-memory processing improved the performance by 10 times. 
+
+
