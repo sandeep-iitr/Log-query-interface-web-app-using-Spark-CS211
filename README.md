@@ -2,7 +2,15 @@
 This is course project of CS 211: Log Query interface
 Log Query Interface is an interactive web application that allows users to query the very large data logs of MobileInsight easily and efficiently. With this interface, users no longer need to talk to the database through command line queries, nor to install the MobileInsight client locally to fetch data. Users can simply select/type the query message through our web based system which queries the database very efficiently and responds back to user. While testing on 6GB of datasets our system takes less than 1 seconds to respond back, the similar queries on traditional MySql database takes more than 60 seconds. The system gives user the capability to execute all the queries using sql query language. User can perform complex join operations on very large tables. The query response time is hugely improved by the server side Spark clusters, which stores the big datasets in a distributed system and execute the query in parallel on multiple 
 
+## Team Members
+1) [Sandeep Singh Sandha](https://sites.google.com/view/sandeep-/home)
+2) Xin Xu
+3) Yue Xin
+4) Zhehan Li
+
 ## [Project Report](https://github.com/sandeep-iitr/Log-query-interface-web-app-using-Spark-CS211/blob/master/Spark_Log_query.pdf)
+
+## [Project Presentation](https://github.com/sandeep-iitr/Log-query-interface-web-app-using-Spark-CS211)
 
 ## Setting up system:
 1) Download eclipse java EE version. <br>
